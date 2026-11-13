@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulador del precio del pan de batalla · La Paz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfcfe;--fg:#1b2430;--mut:#566274;--card:#ffffff;--bd:#cfd8e6;--g:#1d4f91;--w:#d4620a;--r:#b7332f;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+main{max-width:860px;margin:0 auto;padding:28px 18px 56px}
+h1{font-size:clamp(1.5rem,4.2vw,2.1rem);line-height:1.2;margin:0 0 6px;font-weight:700}
+h2{font-size:1.1rem;margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--bd);font-weight:600}
+p{margin:0 0 10px}
+.mut{color:var(--mut);font-size:.9rem}
+.hero{display:flex;flex-wrap:wrap;gap:14px;margin:22px 0}
+.tag{flex:1 1 240px;border:1px solid var(--bd);border-left:6px solid var(--fg);border-radius:0;padding:16px 18px;background:var(--card)}
+.tag b{display:block;font-size:3rem;line-height:1.1;font-weight:700}
+.tag span{font-size:.9rem;color:var(--mut)}
+.tag.now b{color:var(--g)}.tag.next b{color:var(--w)}.tag.now{border-left-color:var(--g)}.tag.next{border-left-color:var(--w)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:2px;padding:16px}
+label{display:flex;flex-direction:column;font-size:.85rem;gap:4px;color:var(--mut)}
+input,select{font:inherit;font-size:1rem;padding:8px 10px;border:1px solid var(--bd);border-radius:2px;background:#fff;color:var(--fg)}
+input:focus-visible{outline:2px solid var(--g);outline-offset:1px}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:2px;padding:14px}
+svg{width:100%;height:auto;display:block}
+.sc{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:420px}
+th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--bd)}
+th:first-child,td:first-child{text-align:left}
+.bar{display:grid;grid-template-columns:minmax(120px,38%) 1fr 52px;gap:10px;align-items:center;margin:7px 0;font-size:.88rem}
+.bar i{display:block;height:14px;background:var(--g);border-radius:0}
+.bar em{font-style:normal;text-align:right;font-weight:600}
+.warn{border-left:4px solid var(--w);padding:8px 12px;background:var(--card);font-size:.88rem;color:var(--mut)}
+.team{background:var(--card);border:1px solid var(--bd);border-radius:2px;padding:16px 18px}
+.ded{border-left:4px solid var(--g);padding:8px 12px;margin:12px 0 0;background:var(--card);font-size:.95rem}
+.prog{height:14px;background:var(--bd);margin:10px 0 6px}.prog i{display:block;height:100%;width:0;background:var(--g)}
+.btn{display:inline-block;font:inherit;font-weight:600;padding:9px 16px;border:1px solid var(--g);background:var(--g);color:#fff;border-radius:2px;cursor:pointer;text-decoration:none;margin:0 8px 8px 0}.btn.o{background:#fff;color:var(--g)}
+.mej{margin:0;padding-left:20px}.mej li{margin:0 0 8px}
+.team h3{margin:0 0 8px;font-size:.92rem;font-weight:600;color:var(--mut)}
+.team ul{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}
+.team li{color:var(--g);font-weight:600}
+.dev{display:inline-block;background:#ffe45c;color:#1b2430;font-weight:700;padding:3px 10px;border:1px solid #1b2430;border-radius:2px}
+</style>
+</head>
+<body>
+<main>
+<h1>¿Cuánto debería costar el pan de batalla?</h1>
+<p class="mut">Simulador basado en la monografía sobre el precio del pan en La Paz. Calcula un precio hipotético a partir de los costos y se hace una proyección a días, meses o años.</p>
+<p class="ded">Dedicado al Lic. M.Sc. Juan Reynaldo Yujra Segales. Además de ser un trabajo universitario, busca ser una herramienta útil para todo el país: muestra cómo el costo de la harina, el dólar y la inflación llegan al precio del pan que paga cada hogar. Tambien puede llegar a ser un gran incentivo para que la gente pueda crear mas herramientas que ayuden con el costo de otros productos en el pais</p>
+
+<h2 style="margin-top:22px">Integrantes del equipo</h2>
+<div class="team">
+<h3>Programación, Diseño Web y Arquitectura</h3>
+<ul><li>Anaya Zamorano Alejandro Antonio</li></ul>
+<h3>Investigación y Datos Cuantitativos</h3>
+<ul style="margin-bottom:0">
+<li>Callecusi Canaviri Diego Antonio</li>
+<li>Coaquira Condori Juan Luis</li>
+<li>Contreras Mollo Ronal Pedro</li>
+<li>Machaca Quispe Cieli Salome</li>
+<li>Ortuño Cala Fabián Oscar</li>
+<li>Santalla Mamani Mharicel</li>
+</ul>
+</div>
+
+<div class="hero">
+  <div class="tag now"><span id="dNow">Hoy</span><b id="pNow">—</b><span id="sNow"></span></div>
+  <div class="tag next"><span id="dNext">Mañana</span><b id="pNext">—</b><span id="sNext"></span></div>
+</div>
+
+<div class="grid">
+  <label>Quintal de harina hoy (Bs)<input id="q" type="number" value="410" min="100" step="5"></label>
+  <label>Escenario<select id="sc"><option value="o">Optimista</option><option value="b" selected>Base</option><option value="p">Pesimista</option></select></label>
+  <label>Horizonte<select id="hz"><option value="14" selected>14 días</option><option value="30">1 mes</option><option value="90">3 meses</option><option value="365">1 año</option><option value="730">2 años</option></select></label>
+  <label>Alza del dólar (% por mes)<input id="dl" type="number" step="0.1"></label>
+  <label>Alza del diésel (% por mes)<input id="ds" type="number" step="0.1"></label>
+  <label>Inflación general (% por mes)<input id="inf" type="number" step="0.1"></label>
+  <label>Elasticidad de la demanda<input id="el" type="number" value="-0.4" step="0.1"></label>
+  <label style="flex-direction:row;align-items:center;gap:8px"><input id="sb" type="checkbox">Harina subsidiada (Bs 334)</label>
+  <label>Panes por quintal<input id="n" type="number" value="800" min="300" step="10"></label>
+  <label>Otros costos por pan (Bs)<input id="o" type="number" value="0.295" min="0" step="0.01"></label>
+  <label>Margen deseado (%)<input id="m" type="number" value="15" min="0" max="60" step="1"></label>
+</div>
+<p class="mut" style="margin-top:8px">Harina, panes por quintal, otros costos y margen corresponden al 12 de noviembre de 2026 (fecha base). Las alzas mensuales son supuestos de cada escenario y se pueden editar.</p>
+
+<h2 id="h2p">Proyección</h2>
+<div class="box"><div id="chart1"></div>
+<p class="mut" style="margin:8px 0 0">Línea azul: precio hipotético. Línea punteada: costo por pan. Referencias: Bs 0,80 (precio acordado con el Gobierno) y Bs 1,00 (Federación).</p></div>
+<div class="sc box" style="margin-top:12px"><table id="tb"></table></div>
+
+<h2>Datos reales que usamos</h2>
+<div class="box">
+<p><b>Dólar:</b> el dólar oficial pasó de Bs 9,73 (29 de junio) a Bs 12,15 (31 de julio). Después casi no se movió: Bs 11,58 el 15 de agosto y Bs 11,71 el 11 de noviembre. Sube unos 0,4% por mes.</p>
+<p><b>Inflación:</b> según el INE, fue 1,10% en agosto, 0,85% en septiembre y 2,07% en octubre. En lo que va del año suma 6,03%.</p>
+<p><b>Harina:</b> el quintal costaba Bs 255 en noviembre de 2025 y ahora está cerca de Bs 410.</p>
+<p><b>Escenarios:</b> con esos datos armamos tres. En el optimista el dólar baja un poco, en el base sigue como ahora y en el pesimista vuelve a subir fuerte.</p>
+<p class="mut" style="margin:0">Del diésel no encontramos datos, así que ese número es un supuesto nuestro. Además, la harina subió más rápido que el dólar, así que el escenario base podría quizas no ser tan cierto.</p>
+</div>
+
+<h2>Lo que dijeron los encuestados</h2>
+<div class="box" id="chart2"></div>
+<p class="mut" style="margin-top:8px">Encuesta del grupo: 40 personas, muestra no probabilística. Describe a los participantes, no a todos los hogares de La Paz y El Alto.</p>
+<h2>Ayuda a la encuesta</h2>
+<div class="box">
+<p>Cuantas más personas respondan, más confiable será el resultado. Responder toma unos 2 minutos y compartir esta página ayuda a llegar a más hogares.</p>
+<div class="prog"><i id="pg"></i></div>
+<p class="mut" id="pgt"></p>
+<p style="margin:0"><a class="btn" id="fb">Responder la encuesta</a><button class="btn o" id="sh" type="button">Compartir esta página</button></p>
+<p class="mut" id="fh" style="margin:0"></p>
+</div>
+
+<h2>Cómo se creó la página</h2>
+<div class="box">
+<p><b>Con qué:</b>Está hecha con HTML, CSS y JavaScript, todo en un solo archivo.</p>
+<p><b>Cuánto demoró:</b> la primera versión salió en una sola sesión de trabajo. Después fuimos hiciendo pequeños cambios (los nombres, el diseño, los datos reales y la encuesta) hasta llegar a esta versión.</p>
+<p><b>Pasos que seguimos:</b></p>
+<ol class="mej">
+<li>Decidimos qué mostrar: el precio del pan hoy y mañana.</li>
+<li>Juntamos los datos de la monografía y los de prensa: harina, dólar e inflación.</li>
+<li>Armamos el cálculo de costos.</li>
+<li>Hicimos la gráfica y la tabla.</li>
+<li>Agregamos los escenarios y la encuesta.</li>
+<li>Cambiamos el diseño y la publicamos con un link.</li>
+</ol>
+<p><b>La lógica del código, explicada fácil:</b></p>
+<ul class="mej">
+<li><b>Datos de entrada:</b> la página tiene casillas para el precio del quintal de harina, los panes por quintal, los otros costos y el margen de ganancia. Si cambias un número, todo se recalcula solo.</li>
+<li><b>Costo de un pan:</b> divide el precio del quintal entre los panes que salen (800) y le suma los otros costos, como levadura, gas y sueldos.</li>
+<li><b>Precio:</b> divide ese costo entre (1 − margen). Con margen de 15% divide entre 0,85. Después lo redondea de 5 en 5 centavos.</li>
+<li><b>Paso del tiempo:</b> toma la fecha de hoy, cuenta cuántos meses pasaron desde el 12 de noviembre de 2026 y hace subir la harina según el dólar, el diésel y la inflación.</li>
+<li><b>Escenarios:</b> son tres grupos de números ya cargados (optimista, base y pesimista). Al elegir uno, se llenan solas las casillas del dólar, el diésel y la inflación.</li>
+<li><b>Subsidio:</b> si marcas la casilla, la harina queda fija en Bs 334 y deja de subir.</li>
+<li><b>Demanda:</b> compara el precio con Bs 0,80 y usa la elasticidad que pongas para estimar cuánto baja el consumo. Es un índice, no una cifra real.</li>
+<li><b>Gráfica y tabla:</b> calcula 15 fechas entre hoy y el final del horizonte y las dibuja con líneas.</li>
+<li><b>Hoy y mañana:</b> usa la fecha del celular o de la computadora, por eso cambian solas cada día.</li>
+<li><b>Encuesta:</b> las barras salen de los porcentajes de las 40 respuestas, y la barra de avance divide las respuestas que tenemos entre la meta.</li>
+</ul>
+<p class="mut" style="margin:0">El código se guarda en Visual Studio Code y se puede publicar gratis en GitHub Pages.</p>
+</div>
+
+<h2>Cómo leer esta página</h2>
+<p class="warn">Es una proyección por escenarios, no una predicción del mercado real. El quintal de harina crece cada mes según el dólar (70%) y la inflación (30%), con una parte (8%) ligada al diésel; los demás costos crecen con la inflación. El precio sale de costo por pan ÷ (1 − margen), redondeado a Bs 0,05, y la demanda se estima con la elasticidad que indiques. Cuanto más lejos el horizonte, más incierto el resultado. Con los datos del grupo no se puede medir la elasticidad, por eso es un supuesto.</p>
+<h2>Cómo se podría mejorar</h2>
+<div class="box">
+<ul class="mej">
+<li>Usar datos reales que se actualicen solos: dólar, inflación y precios de panaderías.</li>
+<li>Agregar más panaderías y más ciudades, como El Alto y Cochabamba.</li>
+<li>Hacer una encuesta más grande para calcular la elasticidad, que con 40 personas no se pudo.</li>
+<li>Cuando haya más datos, cambiar los escenarios por un modelo estadístico.</li>
+<li>Pesar el pan en distintas tiendas para ver cuánto cuesta por kilo.</li>
+<li>Hacer una calculadora para que cada familia vea cuánto gasta de más al mes.</li>
+<li>Que lo usen consumidores, panificadores y autoridades para conocer los costos con claridad.</li>
+</ul>
+</div>
+</main>
+<script>
+var $=function(i){return document.getElementById(i)};
+var fm=function(v){return v.toFixed(2).replace(".",",")};
+var fd=function(d){return d.toLocaleDateString("es-BO",{day:"numeric",month:"short"})};
+function calcOld(){
+  var q=+$("q").value||0,d=(+$("d").value||0)/100,n=Math.max(+$("n").value||800,1),o=+$("o").value||0,m=Math.min((+$("m").value||0)/100,.9),rows=[],t0=new Date();
+  for(var i=0;i<=14;i++){var fl=q*Math.pow(1+d,i),c=fl/n+o,raw=c/(1-m),p=Math.round(raw/.05)*.05,dt=new Date(t0);dt.setDate(t0.getDate()+i);rows.push({dt:dt,fl:fl,c:c,raw:raw,p:p})}
+  $("dNow").textContent="Hoy, "+fd(rows[0].dt);$("pNow").textContent="Bs "+fm(rows[0].p);$("sNow").textContent="Costo "+fm(rows[0].c)+" por pan";
+  $("dNext").textContent="Mañana, "+fd(rows[1].dt);$("pNext").textContent="Bs "+fm(rows[1].p);
+  var df=rows[1].p-rows[0].p;$("sNext").textContent=df>0?"Sube Bs "+fm(df):df<0?"Baja Bs "+fm(-df):"Sin cambio";
+  var h="<tr><th>Día</th><th>Harina (Bs)</th><th>Costo</th><th>Precio</th></tr>";
+  rows.slice(0,8).forEach(function(r){h+="<tr><td>"+fd(r.dt)+"</td><td>"+r.fl.toFixed(0)+"</td><td>"+fm(r.c)+"</td><td><b>"+fm(r.p)+"</b></td></tr>"});
+  $("tb").innerHTML=h;
+  var vals=rows.map(function(r){return r.p}).concat(rows.map(function(r){return r.c}),[.8,1]),lo=Math.floor((Math.min.apply(0,vals)-.05)*20)/20,hi=Math.ceil((Math.max.apply(0,vals)+.05)*20)/20,W=640,H=270,L=46,R=14,T=14,B=30;
+  var X=function(i){return L+i*(W-L-R)/14},Y=function(v){return T+(hi-v)*(H-T-B)/(hi-lo)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Proyección de precio y costo por pan">';
+  for(var g=lo;g<=hi+1e-9;g+=.05){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" stroke="var(--bd)"/><text x="'+(L-6)+'" y="'+(Y(g)+4)+'" font-size="11" text-anchor="end" fill="var(--mut)">'+fm(g)+'</text>'}
+  [[.8,"var(--w)","0,80"],[1,"var(--r)","1,00"]].forEach(function(r){if(r[0]>=lo&&r[0]<=hi)s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(r[0])+'" y2="'+Y(r[0])+'" stroke="'+r[1]+'" stroke-width="1.5" stroke-dasharray="2 4"/><text x="'+(W-R)+'" y="'+(Y(r[0])-4)+'" font-size="11" text-anchor="end" fill="'+r[1]+'">Bs '+r[2]+'</text>'});
+  s+='<polyline fill="none" stroke="var(--mut)" stroke-width="2" stroke-dasharray="6 4" points="'+rows.map(function(r,i){return X(i)+","+Y(r.c)}).join(" ")+'"/>';
+  s+='<polyline fill="none" stroke="var(--g)" stroke-width="3" points="'+rows.map(function(r,i){return X(i)+","+Y(r.p)}).join(" ")+'"/>';
+  rows.forEach(function(r,i){s+='<circle cx="'+X(i)+'" cy="'+Y(r.p)+'" r="3.5" fill="var(--g)"/>';if(i%2==0)s+='<text x="'+X(i)+'" y="'+(H-10)+'" font-size="11" text-anchor="middle" fill="var(--mut)">'+fd(r.dt)+'</text>'});
+  $("chart1").innerHTML=s+"</svg>";
+}
+
+var enc=[["Compra pan de batalla todos los días",62.5],["Redujo su compra en 1 a 3 unidades",70],["Notó menor tamaño o peso del pan",65],["Consume menos pan",52.5],["Sustituyó por fideo, arroz o avena",37.5],["Compra 3 a 5 veces por semana",27.5],["Notó peor calidad",25],["Redujo su consumo a la mitad o más",22.5]],b="";
+enc.forEach(function(e){b+='<div class="bar"><span>'+e[0]+'</span><i style="width:'+e[1]+'%"></i><em>'+String(e[1]).replace(".",",")+'%</em></div>'});
+$("chart2").innerHTML=b;
+var BASE=new Date(2026,10,12),SC={o:[-0.3,0,0.4],b:[0.4,1,0.6],p:[1.5,3,1.3]};
+function pr(dt,v){var mo=(dt-BASE)/2629800000,fl=v.sb?334:v.q*(0.92*Math.pow(1+.7*v.dl+.3*v.inf,mo)+0.08*Math.pow(1+v.ds,mo)),c=fl/v.n+v.o*Math.pow(1+v.inf,mo);return{fl:fl,c:c,p:Math.round(c/(1-v.m)/.05)*.05}}
+function proj(){
+  var v={q:+$("q").value||0,n:Math.max(+$("n").value||800,1),o:+$("o").value||0,m:Math.min((+$("m").value||0)/100,.9),dl:(+$("dl").value||0)/100,ds:(+$("ds").value||0)/100,inf:(+$("inf").value||0)/100,sb:$("sb").checked},e=+$("el").value||0,H=+$("hz").value,t0=new Date(),rows=[],step=H/14,lg=H>=90;
+  var fx=function(d){return lg?d.toLocaleDateString("es-BO",{month:"short",year:"2-digit"}):fd(d)};
+  for(var i=0;i<=14;i++){var dt=new Date(t0);dt.setDate(t0.getDate()+Math.round(i*step));var r=pr(dt,v);r.dt=dt;r.dq=100*Math.pow(r.p/.8,e);rows.push(r)}
+  var a=pr(t0,v),tm=new Date(t0);tm.setDate(t0.getDate()+1);var b2=pr(tm,v);
+  $("dNow").textContent="Hoy, "+fd(t0);$("pNow").textContent="Bs "+fm(a.p);$("sNow").textContent="Costo "+fm(a.c)+" por pan";
+  $("dNext").textContent="Mañana, "+fd(tm);$("pNext").textContent="Bs "+fm(b2.p);var df=b2.p-a.p;$("sNext").textContent=df>0.001?"Sube Bs "+fm(df):df<-0.001?"Baja Bs "+fm(-df):"Sin cambio";
+  $("h2p").textContent="Proyección: "+({14:"próximos 14 días",30:"próximo mes",90:"próximos 3 meses",365:"próximo año",730:"próximos 2 años"}[H]);
+  var h="<tr><th>Fecha</th><th>Harina (Bs)</th><th>Costo</th><th>Precio</th><th>Demanda (índice)</th></tr>";
+  rows.forEach(function(r){h+="<tr><td>"+fx(r.dt)+"</td><td>"+r.fl.toFixed(0)+"</td><td>"+fm(r.c)+"</td><td><b>"+fm(r.p)+"</b></td><td>"+r.dq.toFixed(0)+"</td></tr>"});$("tb").innerHTML=h;
+  var vals=rows.map(function(r){return r.p}).concat(rows.map(function(r){return r.c}),[.8,1]),lo=Math.floor((Math.min.apply(0,vals)-.05)*20)/20,hi=Math.ceil((Math.max.apply(0,vals)+.05)*20)/20,W=640,H2=270,L=46,R=14,T=14,B=30;
+  var X=function(i){return L+i*(W-L-R)/14},Y=function(x){return T+(hi-x)*(H2-T-B)/(hi-lo)},gs=hi-lo>.6?.1:.05;
+  var s='<svg viewBox="0 0 '+W+' '+H2+'" role="img" aria-label="Proyección de precio y costo por pan">';
+  for(var g=lo;g<=hi+1e-9;g+=gs){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" stroke="var(--bd)"/><text x="'+(L-6)+'" y="'+(Y(g)+4)+'" font-size="11" text-anchor="end" fill="var(--mut)">'+fm(g)+'</text>'}
+  [[.8,"var(--w)","0,80"],[1,"var(--r)","1,00"]].forEach(function(r){if(r[0]>=lo&&r[0]<=hi)s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(r[0])+'" y2="'+Y(r[0])+'" stroke="'+r[1]+'" stroke-width="1.5" stroke-dasharray="2 4"/><text x="'+(W-R)+'" y="'+(Y(r[0])-4)+'" font-size="11" text-anchor="end" fill="'+r[1]+'">Bs '+r[2]+'</text>'});
+  s+='<polyline fill="none" stroke="var(--mut)" stroke-width="2" stroke-dasharray="6 4" points="'+rows.map(function(r,i){return X(i)+","+Y(r.c)}).join(" ")+'"/>';
+  s+='<polyline fill="none" stroke="var(--g)" stroke-width="3" points="'+rows.map(function(r,i){return X(i)+","+Y(r.p)}).join(" ")+'"/>';
+  rows.forEach(function(r,i){s+='<circle cx="'+X(i)+'" cy="'+Y(r.p)+'" r="3.5" fill="var(--g)"/>';if(i%2==0)s+='<text x="'+X(i)+'" y="'+(H2-10)+'" font-size="11" text-anchor="middle" fill="var(--mut)">'+fx(r.dt)+'</text>'});
+  $("chart1").innerHTML=s+"</svg>";
+}
+function setSc(){var s=SC[$("sc").value];$("dl").value=s[0];$("ds").value=s[1];$("inf").value=s[2];proj()}
+["q","n","o","m","dl","ds","inf","el","hz","sb"].forEach(function(i){$(i).addEventListener("input",proj)});
+$("sc").addEventListener("change",setSc);
+setSc();
+var MUESTRA=40,META=100,FORM_URL="";
+(function(){var p=Math.min(100,MUESTRA/META*100);$("pg").style.width=p+"%";$("pgt").textContent=MUESTRA+" de "+META+" respuestas ("+p.toFixed(0)+"% de la meta)";var fb=$("fb");if(FORM_URL){fb.href=FORM_URL;fb.target="_blank";fb.rel="noopener"}else{fb.style.display="none";$("fh").textContent="Pronto habrá un formulario para responder. Mientras tanto, comparte esta página con quien pueda ayudar."}
+$("sh").addEventListener("click",function(){var u=location.href;if(navigator.share){navigator.share({title:document.title,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){$("sh").textContent="Enlace copiado"}).catch(function(){})}})})();
+</script>
+</body>
+</html>
