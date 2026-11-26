@@ -5,58 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Simulador del precio del pan de batalla · La Paz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fbfcfe;--fg:#1b2430;--mut:#566274;--card:#ffffff;--bd:#cfd8e6;--g:#1d4f91;--w:#d4620a;--r:#b7332f;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--bg:#f5f7fb;--fg:#0b1b33;--mut:#5a6b85;--card:#fff;--bd:#e2e8f2;--g:#2457f5;--w:#f08c00;--r:#e5484d;--navy:#0b1f3a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:84px;scroll-behavior:smooth}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
-main{max-width:860px;margin:0 auto;padding:28px 18px 56px}
-h1{font-size:clamp(1.5rem,4.2vw,2.1rem);line-height:1.2;margin:0 0 6px;font-weight:700}
-h2{font-size:1.1rem;margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--bd);font-weight:600}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.55}
+body::before{content:'';position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#fff;z-index:30}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
+.nb{max-width:980px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:16px}
+.logo{font-weight:800;color:var(--navy);text-decoration:none;white-space:nowrap}
+nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav a{padding:7px 12px;border-radius:8px;color:var(--mut);text-decoration:none;font-size:.88rem;font-weight:500;white-space:nowrap}
+nav a:hover{background:#eef2fd;color:var(--g)}
+main{max-width:980px;margin:0 auto;padding:12px 18px 64px}
+section{margin:44px 0}
+h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.1;margin:0 0 12px;font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.4rem;margin:28px 0 12px;font-weight:700;letter-spacing:-.01em}
+.eb{margin:0 0 4px;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g)}
 p{margin:0 0 10px}
 .mut{color:var(--mut);font-size:.9rem}
-.hero{display:flex;flex-wrap:wrap;gap:14px;margin:22px 0}
-.tag{flex:1 1 240px;border:1px solid var(--bd);border-left:6px solid var(--fg);border-radius:0;padding:16px 18px;background:var(--card)}
-.tag b{display:block;font-size:3rem;line-height:1.1;font-weight:700}
-.tag span{font-size:.9rem;color:var(--mut)}
-.tag.now b{color:var(--g)}.tag.next b{color:var(--w)}.tag.now{border-left-color:var(--g)}.tag.next{border-left-color:var(--w)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:2px;padding:16px}
-label{display:flex;flex-direction:column;font-size:.85rem;gap:4px;color:var(--mut)}
-input,select{font:inherit;font-size:1rem;padding:8px 10px;border:1px solid var(--bd);border-radius:2px;background:#fff;color:var(--fg)}
-input:focus-visible{outline:2px solid var(--g);outline-offset:1px}
-.box{background:var(--card);border:1px solid var(--bd);border-radius:2px;padding:14px}
+#inicio{margin:20px 0 44px;padding:36px 26px;border-radius:22px;background:linear-gradient(135deg,#0b1f3a 0%,#1b3fa8 100%);color:#fff}
+#inicio .mut{color:#b9c6e4}#inicio h2{color:#fff;font-size:1.1rem;margin-top:26px}
+#inicio .ded{background:rgba(255,255,255,.1);border-left-color:#7aa2ff;color:#e8eefc}
+#inicio .team{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
+#inicio .team li{color:#fff}#inicio .team h3{color:#b9c6e4}
+.hero{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0 0}
+.tag{flex:1 1 240px;border-radius:16px;padding:18px 20px;background:#fff;color:var(--fg);box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.tag b{display:block;font-size:3rem;line-height:1.1;font-weight:800}
+.tag span{font-size:.88rem;color:var(--mut)}
+.tag.now b{color:var(--g)}.tag.next b{color:var(--w)}
+.box,.grid,.team{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.05),0 6px 16px rgba(16,24,40,.04)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+label{display:flex;flex-direction:column;font-size:.82rem;font-weight:500;gap:5px;color:var(--mut)}
+input,select{font:inherit;font-size:1rem;padding:9px 11px;border:1px solid #cdd7e8;border-radius:8px;background:#fff;color:var(--fg)}
+input:focus-visible,select:focus-visible{outline:2px solid var(--g);outline-offset:1px}
 svg{width:100%;height:auto;display:block}
 .sc{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:420px}
-th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--bd)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:460px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--bd)}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
 th:first-child,td:first-child{text-align:left}
-.bar{display:grid;grid-template-columns:minmax(120px,38%) 1fr 52px;gap:10px;align-items:center;margin:7px 0;font-size:.88rem}
-.bar i{display:block;height:14px;background:var(--g);border-radius:0}
+.bar{display:grid;grid-template-columns:minmax(120px,38%) 1fr 52px;gap:10px;align-items:center;margin:8px 0;font-size:.88rem}
+.bar i{display:block;height:12px;background:var(--g);border-radius:999px}
 .bar em{font-style:normal;text-align:right;font-weight:600}
-.warn{border-left:4px solid var(--w);padding:8px 12px;background:var(--card);font-size:.88rem;color:var(--mut)}
-.team{background:var(--card);border:1px solid var(--bd);border-radius:2px;padding:16px 18px}
-.ded{border-left:4px solid var(--g);padding:8px 12px;margin:12px 0 0;background:var(--card);font-size:.95rem}
-.prog{height:14px;background:var(--bd);margin:10px 0 6px}.prog i{display:block;height:100%;width:0;background:var(--g)}
-.btn{display:inline-block;font:inherit;font-weight:600;padding:9px 16px;border:1px solid var(--g);background:var(--g);color:#fff;border-radius:2px;cursor:pointer;text-decoration:none;margin:0 8px 8px 0}.btn.o{background:#fff;color:var(--g)}
+.warn{border-left:4px solid var(--w);padding:10px 14px;background:#fff8ec;border-radius:0 10px 10px 0;font-size:.9rem;color:#5b4a2a}
+.ded{border-left:4px solid var(--g);padding:10px 14px;margin:14px 0 0;border-radius:0 10px 10px 0;background:#eef2fd;font-size:.95rem}
+.prog{height:10px;background:var(--bd);margin:10px 0 6px;border-radius:999px;overflow:hidden}.prog i{display:block;height:100%;width:0;background:var(--g)}
+.btn{display:inline-block;font:inherit;font-weight:600;padding:10px 18px;border:1px solid var(--g);background:var(--g);color:#fff;border-radius:10px;cursor:pointer;text-decoration:none;margin:0 8px 8px 0}.btn:hover{filter:brightness(.92)}.btn.o{background:#fff;color:var(--g)}
 .mej{margin:0;padding-left:20px}.mej li{margin:0 0 8px}
 .team h3{margin:0 0 8px;font-size:.92rem;font-weight:600;color:var(--mut)}
 .team ul{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px 18px}
 .team li{color:var(--g);font-weight:600}
-.dev{display:inline-block;background:#ffe45c;color:#1b2430;font-weight:700;padding:3px 10px;border:1px solid #1b2430;border-radius:2px}
+a{color:var(--g)}
 </style>
 </head>
 <body>
+<header class='top'><div class='nb'><a class='logo' href='#inicio'>🥖 PanLaPaz</a><nav><a href='#contexto'>Contexto</a><a href='#hogar'>Hogar</a><a href='#simulador'>Simulador</a><a href='#futuro'>Futuro</a><a href='#panaderos'>Panaderos</a><a href='#noticias'>Noticias</a><a href='#encuesta'>Encuesta</a><a href='#acerca'>Acerca</a></nav></div></header>
 <main>
+<section id='inicio'>
 <h1>¿Cuánto debería costar el pan de batalla?</h1>
-<p class="mut">Simulador basado en la monografía sobre el precio del pan en La Paz. Calcula un precio hipotético a partir de los costos y se hace una proyección a días, meses o años.</p>
-<p class="ded">Dedicado al Lic. M.Sc. Juan Reynaldo Yujra Segales. Además de ser un trabajo universitario, busca ser una herramienta útil para todo el país: muestra cómo el costo de la harina, el dólar y la inflación llegan al precio del pan que paga cada hogar. Tambien puede llegar a ser un gran incentivo para que la gente pueda crear mas herramientas que ayuden con el costo de otros productos en el pais</p>
+<p class="mut">Simulador basado en la monografía sobre el precio del pan en La Paz. Calcula un precio hipotético a partir de los costos y lo proyecta a días, meses o años.</p>
+<p class="ded">Dedicado al Lic. M.Sc. Juan Reynaldo Yujra Segales. Además de ser un trabajo universitario, busca ser una herramienta útil para todo el país: muestra cómo el costo de la harina, el dólar y la inflación llegan al precio del pan que paga cada hogar.</p>
 
 <h2 style="margin-top:22px">Integrantes del equipo</h2>
 <div class="team">
 <h3>Programación, Diseño Web y Arquitectura</h3>
 <ul><li>Anaya Zamorano Alejandro Antonio</li></ul>
-<h3>Investigación, Datos Cuantitativos y Planificación de la Página Web</h3>
+<h3>Investigación y Datos Cuantitativos</h3>
 <ul style="margin-bottom:0">
 <li>Callecusi Canaviri Diego Antonio</li>
 <li>Coaquira Condori Juan Luis</li>
@@ -71,9 +88,41 @@ th:first-child,td:first-child{text-align:left}
   <div class="tag now"><span id="dNow">Hoy</span><b id="pNow">—</b><span id="sNow"></span></div>
   <div class="tag next"><span id="dNext">Mañana</span><b id="pNext">—</b><span id="sNext"></span></div>
 </div>
+</section>
+<section id='contexto'>
+<h2>¿Cómo llegamos a Bs 1?</h2>
+<div class='g3'>
+<div class='tag'><span>Enero de 2025</span><b style='font-size:2rem'>Bs 0,50</b></div>
+<div class='tag'><span>2026, acuerdo con el Gobierno</span><b style='font-size:2rem'>Bs 0,80</b></div>
+<div class='tag'><span>Noviembre de 2026, La Paz y El Alto</span><b style='font-size:2rem'>Bs 1,00</b></div></div>
+<p style='margin:12px 0 8px'><b>¿Por qué sube?</b></p>
+<div class='g3'>
+<div class='box'><b>1. La harina</b><br>El quintal pasó de Bs 255 a cerca de Bs 410 en un año.</div>
+<div class='box'><b>2. El dólar</b><br>Pasó de Bs 9,73 a unos Bs 11,70 desde junio y encarece insumos importados.</div>
+<div class='box'><b>3. El diésel</b><br>Se quitó su subvención el 19 de septiembre y el transporte salió más caro.</div></div>
+</section>
+<section id='hogar'>
+<p class='eb'>Calculadora 1 · Para tu hogar</p>
+<h2>¿Es justo lo que pagas?</h2>
+<div class='box'>
+<div class='g3'><label>¿A cuánto compras el pan hoy? (Bs)<input id='pp' type='number' step='0.05' value='1'></label></div>
+<div id='semo' style='margin:12px 0'></div>
+<a class='btn' id='wa' target='_blank' rel='noopener'>Compartir por WhatsApp</a>
+<p class='mut' style='margin:0'>Última actualización: 26 de noviembre de 2026. Fuentes: Banco Central, INE y prensa boliviana (más abajo, en «Noticias» y «Datos reales»). Es una estimación de nuestro modelo, no un precio oficial.</p>
+</div>
 
+<h2>Tu gasto en pan al mes</h2>
+<div class='box'><div class='g3'>
+<label>Personas en el hogar<input id='pe' type='number' value='5' min='1'></label>
+<label>Panes por persona al día<input id='ph' type='number' value='2' min='0' step='0.5'></label>
+<label>Peso de un pan (g)<input id='pw' type='number' value='60' min='10'></label></div>
+<div id='hog' style='margin-top:12px'></div></div>
+</section>
+<section id='simulador'>
+<p class='eb'>Calculadora 2 · Simulador avanzado</p>
+<h2>Simulador avanzado</h2>
 <div class="grid">
-  <label>Quintal de harina hoy (Bs)<input id="q" type="number" value="410" min="100" step="5"></label>
+  <label>Quintal de harina al 12/11/2026 (Bs)<input id="q" type="number" value="410" min="100" step="5"></label>
   <label>Escenario<select id="sc"><option value="o">Optimista</option><option value="b" selected>Base</option><option value="p">Pesimista</option></select></label>
   <label>Horizonte<select id="hz"><option value="14" selected>14 días</option><option value="30">1 mes</option><option value="90">3 meses</option><option value="365">1 año</option><option value="730">2 años</option></select></label>
   <label>Alza del dólar (% por mes)<input id="dl" type="number" step="0.1"></label>
@@ -91,6 +140,52 @@ th:first-child,td:first-child{text-align:left}
 <div class="box"><div id="chart1"></div>
 <p class="mut" style="margin:8px 0 0">Línea azul: precio hipotético. Línea punteada: costo por pan. Referencias: Bs 0,80 (precio acordado con el Gobierno) y Bs 1,00 (Federación).</p></div>
 <div class="sc box" style="margin-top:12px"><table id="tb"></table></div>
+<div class="box" style="margin-top:12px"><p style="margin:0 0 6px"><b>Ventas e ingreso estimados</b> (hoy = 100)</p><div id="chd"></div><p class="mut" style="margin:8px 0 0">Azul: demanda (cantidad de panes). Naranja: ingreso de los panaderos. Línea punteada: nivel de hoy.</p><p class="mut" id="dtx" style="margin:6px 0 0"></p></div>
+</section>
+<section id='futuro'>
+<p class='eb'>Calculadora 3 · Escenarios a futuro</p>
+<h2>Mirando al futuro: sin subvención a la gasolina y al gas</h2>
+<div class='box'>
+<div class='g3'>
+<label>Fecha en que se retira la gasolina<input id='fd' type='date' value='2027-01-12'></label>
+<label>Alza del transporte (%)<input id='tg' type='number' value='40' step='5'></label>
+<label>Alza del costo del gas en el horno (%)<input id='gl' type='number' value='100' step='10'></label></div>
+<div id='ch3' style='margin-top:12px'></div>
+<p class='mut'>Gris: sin retiro. Naranja: se retira la gasolina. Azul: se retira la gasolina y también el gas. La fecha es la que dijo YPFB; el Gobierno dice que no hay fecha.</p>
+<p id='fx'></p>
+<ul class='mej'>
+<li>La gasolina sube el transporte de la harina y del pan.</li>
+<li>El gas lo usan los hornos, así que pega directo al costo de cada pan.</li>
+<li>Los porcentajes son supuestos nuestros: no hay cifras oficiales de cuánto subirán.</li>
+<li>YPFB dijo que el gas licuado seguiría subvencionado en 2027, pero no es seguro.</li>
+</ul>
+</div>
+</section>
+<section id='panaderos'>
+<p class='eb'>Calculadora 4 · Para panaderos</p>
+<h2>Calculadora de costos para panaderos</h2>
+<div class='box'><div class='g3'>
+<label>Quintales de harina por día<input id='bq' type='number' value='5' min='1'></label>
+<label>Precio del quintal (Bs)<input id='bp' type='number' value='410'></label>
+<label>Panes por quintal<input id='bn' type='number' value='800'></label>
+<label>Otros costos por pan (Bs)<input id='bv' type='number' value='0.12' step='0.01'></label>
+<label>Costos fijos por día (Bs)<input id='bf' type='number' value='700'></label>
+<label>Precio de venta (Bs)<input id='bs' type='number' value='0.8' step='0.05'></label></div>
+<div id='bo' style='margin-top:12px'></div></div>
+</section>
+<section id='noticias'>
+<h2>Noticias del pan (hasta el 26 de noviembre)</h2>
+<div class='box'>
+<ul class='mej'>
+<li><b>19/09:</b> se quitó la subvención al diésel, lo que encarece el transporte de insumos. <a href='https://lapatria.bo/actualidad/politica/ypfb-anuncia-fin-subvencion-gasolina-enero/' target='_blank' rel='noopener'>Fuente</a></li>
+<li><b>26/10:</b> el Gobierno y panificadores independientes acuerdan harina a Bs 310 como máximo para mantener el pan a Bs 0,80 en La Paz. Rige en 2027 y en diciembre revisarán los costos. <a href='https://www.erbol.com.bo/econom%C3%ADa/gobierno-vender%C3%A1-harina-precio-justo-para-intentar-mantener-el-pan-bs-080' target='_blank' rel='noopener'>Fuente</a></li>
+<li><b>26/10:</b> la Federación de Panificadores de La Paz dice que no firmó el acuerdo y mantiene el pan a Bs 1. <a href='https://larazon.bo/economia-y-empresa/2026/10/26/panificadores-de-la-paz-mantienen-el-pan-a-bs-1-y-rechazan-acuerdo/' target='_blank' rel='noopener'>Fuente</a></li>
+<li><b>06/11:</b> los panificadores de El Alto deciden subir el pan a Bs 1 desde el 9 de noviembre y dicen que no sancionarán el gramaje menor. <a href='https://www.eldiario.net/portal/2026/11/06/panificadores-de-el-alto-subiran-el-pan-a-bs-1-desde-el-lunes-1620/' target='_blank' rel='noopener'>Fuente</a></li>
+<li><b>09/11:</b> dirigentes de El Alto dicen que el quintal subió cerca de Bs 100. Cochabamba también sube a Bs 1. <a href='https://www.agendaminera.com/actualidad/nacional/panificadores-de-el-alto-ratifican-precio-del-pan-a-bs-1-desde-este-lunes/' target='_blank' rel='noopener'>Fuente</a></li>
+<li><b>16/11:</b> YPFB dijo que la subvención a la gasolina terminaría el 12 de enero de 2027, pero el Ministerio de Hidrocarburos respondió que no hay fecha definida. <a href='https://fmbolivia.com.bo/nacional/gobierno-evaluara-cuando-retirar-la-subvencion-a-la-gasolina-y-descarta-que-sea-necesariamente-el-12-de-enero-21841' target='_blank' rel='noopener'>Fuente</a></li>
+</ul>
+<p class='mut' style='margin:0'>No encontramos noticias nuevas del pan entre el 10 y el 26 de noviembre. Esta lista llega hasta lo último que pudimos confirmar.</p>
+</div>
 
 <h2>Datos reales que usamos</h2>
 <div class="box">
@@ -98,9 +193,10 @@ th:first-child,td:first-child{text-align:left}
 <p><b>Inflación:</b> según el INE, fue 1,10% en agosto, 0,85% en septiembre y 2,07% en octubre. En lo que va del año suma 6,03%.</p>
 <p><b>Harina:</b> el quintal costaba Bs 255 en noviembre de 2025 y ahora está cerca de Bs 410.</p>
 <p><b>Escenarios:</b> con esos datos armamos tres. En el optimista el dólar baja un poco, en el base sigue como ahora y en el pesimista vuelve a subir fuerte.</p>
-<p class="mut" style="margin:0">Del diésel no encontramos datos, así que ese número es un supuesto nuestro. Además, la harina subió más rápido que el dólar, así que el escenario base podría quizas no ser tan cierto.</p>
+<p class="mut" style="margin:0">La harina subió más rápido que el dólar, así que el escenario base podría quedarse corto.</p>
 </div>
-
+</section>
+<section id='encuesta'>
 <h2>Lo que dijeron los encuestados</h2>
 <div class="box" id="chart2"></div>
 <p class="mut" style="margin-top:8px">Encuesta del grupo: 40 personas, muestra no probabilística. Describe a los participantes, no a todos los hogares de La Paz y El Alto.</p>
@@ -112,11 +208,12 @@ th:first-child,td:first-child{text-align:left}
 <p style="margin:0"><a class="btn" id="fb">Responder la encuesta</a><button class="btn o" id="sh" type="button">Compartir esta página</button></p>
 <p class="mut" id="fh" style="margin:0"></p>
 </div>
-
+</section>
+<section id='acerca'>
 <h2>Cómo se creó la página</h2>
 <div class="box">
-<p><b>Con qué:</b>Está hecha con HTML, CSS y JavaScript, todo en un solo archivo.</p>
-<p><b>Cuánto demoró:</b> la primera versión salió en una sola sesión de trabajo. Después fuimos hiciendo pequeños cambios (los nombres, el diseño, los datos reales y la encuesta) hasta llegar a esta versión.</p>
+<p><b>Con que:</b> o. Está hecha con HTML, CSS y JavaScript, todo en un solo archivo Se uso la IA para mejorar la estetica de la pagina, la logica, herramientas y graficas fueron realizadas por nosotros.</p>
+<p><b>Cuánto demoró:</b> la primera versión salió en una sola sesión de trabajo. Después fuimos pidiendo cambios (los nombres, el diseño, los datos reales y la encuesta) hasta llegar a esta versión.</p>
 <p><b>Pasos que seguimos:</b></p>
 <ol class="mej">
 <li>Decidimos qué mostrar: el precio del pan hoy y mañana.</li>
@@ -134,7 +231,7 @@ th:first-child,td:first-child{text-align:left}
 <li><b>Paso del tiempo:</b> toma la fecha de hoy, cuenta cuántos meses pasaron desde el 12 de noviembre de 2026 y hace subir la harina según el dólar, el diésel y la inflación.</li>
 <li><b>Escenarios:</b> son tres grupos de números ya cargados (optimista, base y pesimista). Al elegir uno, se llenan solas las casillas del dólar, el diésel y la inflación.</li>
 <li><b>Subsidio:</b> si marcas la casilla, la harina queda fija en Bs 334 y deja de subir.</li>
-<li><b>Demanda:</b> compara el precio con Bs 0,80 y usa la elasticidad que pongas para estimar cuánto baja el consumo. Es un índice, no una cifra real.</li>
+<li><b>Demanda:</b> compara el precio de cada fecha con el de hoy y usa la elasticidad que pongas para estimar cuánto cambian las ventas y el ingreso. Es un índice (hoy = 100), no una cifra real.</li>
 <li><b>Gráfica y tabla:</b> calcula 15 fechas entre hoy y el final del horizonte y las dibuja con líneas.</li>
 <li><b>Hoy y mañana:</b> usa la fecha del celular o de la computadora, por eso cambian solas cada día.</li>
 <li><b>Encuesta:</b> las barras salen de los porcentajes de las 40 respuestas, y la barra de avance divide las respuestas que tenemos entre la meta.</li>
@@ -143,7 +240,7 @@ th:first-child,td:first-child{text-align:left}
 </div>
 
 <h2>Cómo leer esta página</h2>
-<p class="warn">Es una proyección por escenarios, no una predicción del mercado real. El quintal de harina crece cada mes según el dólar (70%) y la inflación (30%), con una parte (8%) ligada al diésel; los demás costos crecen con la inflación. El precio sale de costo por pan ÷ (1 − margen), redondeado a Bs 0,05, y la demanda se estima con la elasticidad que indiques. Cuanto más lejos el horizonte, más incierto el resultado. Con los datos del grupo no se puede medir la elasticidad, por eso es un supuesto.</p>
+<p class="warn">Es una proyección por escenarios, no una predicción del mercado real. El quintal de harina crece cada mes según el dólar (70%) y la inflación (30%), con una parte (8%) ligada al diésel; los demás costos crecen con la inflación. El precio sale de costo por pan ÷ (1 − margen), redondeado a Bs 0,05, y la demanda se estima con la elasticidad que indiques, tomando el precio de hoy como base (100). Cuanto más lejos el horizonte, más incierto el resultado. Con los datos del grupo no se puede medir la elasticidad, por eso es un supuesto.</p>
 <h2>Cómo se podría mejorar</h2>
 <div class="box">
 <ul class="mej">
@@ -156,6 +253,7 @@ th:first-child,td:first-child{text-align:left}
 <li>Que lo usen consumidores, panificadores y autoridades para conocer los costos con claridad.</li>
 </ul>
 </div>
+</section>
 </main>
 <script>
 var $=function(i){return document.getElementById(i)};
@@ -186,16 +284,26 @@ enc.forEach(function(e){b+='<div class="bar"><span>'+e[0]+'</span><i style="widt
 $("chart2").innerHTML=b;
 var BASE=new Date(2026,10,12),SC={o:[-0.3,0,0.4],b:[0.4,1,0.6],p:[1.5,3,1.3]};
 function pr(dt,v){var mo=(dt-BASE)/2629800000,fl=v.sb?334:v.q*(0.92*Math.pow(1+.7*v.dl+.3*v.inf,mo)+0.08*Math.pow(1+v.ds,mo)),c=fl/v.n+v.o*Math.pow(1+v.inf,mo);return{fl:fl,c:c,p:Math.round(c/(1-v.m)/.05)*.05}}
+function lc(el,rows,keys,cols,ref,lab){var al=[ref];rows.forEach(function(r){keys.forEach(function(k){al.push(r[k])})});var lo=Math.floor(Math.min.apply(0,al)/5)*5-5,hi=Math.ceil(Math.max.apply(0,al)/5)*5+5,W=640,H=250,L=46,R=14,T=14,B=30,X=function(i){return L+i*(W-L-R)/14},Y=function(z){return T+(hi-z)*(H-T-B)/(hi-lo)},st=(hi-lo)>40?10:5,s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Demanda e ingreso estimados">';
+for(var g=lo;g<=hi;g+=st){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" stroke="var(--bd)"/><text x="'+(L-6)+'" y="'+(Y(g)+4)+'" font-size="11" text-anchor="end" fill="var(--mut)">'+g+'</text>'}
+s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(ref)+'" y2="'+Y(ref)+'" stroke="var(--mut)" stroke-dasharray="2 4"/>';
+keys.forEach(function(k,j){s+='<polyline fill="none" stroke="'+cols[j]+'" stroke-width="3" points="'+rows.map(function(r,i){return X(i)+","+Y(r[k])}).join(" ")+'"/>'});
+rows.forEach(function(r,i){if(i%2==0)s+='<text x="'+X(i)+'" y="'+(H-10)+'" font-size="11" text-anchor="middle" fill="var(--mut)">'+lab(r.dt)+'</text>'});
+el.innerHTML=s+'</svg>'}
+function proj_end(rows,e,fx){var z=rows[14],sg=function(x){return (x>0?"+":"")+x.toFixed(1).replace(".",",")},ae=Math.abs(e),cl=ae<1?"inelástica: si el precio sube, las ventas bajan menos y el ingreso sube":(ae==1?"unitaria: el ingreso casi no cambia":"elástica: si el precio sube, las ventas bajan más y el ingreso baja");
+lc($("chd"),rows,["dq","ing"],["var(--g)","var(--w)"],100,fx);
+$("dtx").innerHTML="Con elasticidad "+e.toFixed(1).replace(".",",")+" la demanda es "+cl+". Hasta "+fx(z.dt)+" el precio cambia "+sg((z.p/rows[0].p-1)*100)+"%, las ventas "+sg(z.dq-100)+"% y el ingreso "+sg(z.ing-100)+"%. Es un supuesto, no una medición."}
 function proj(){
-  var v={q:+$("q").value||0,n:Math.max(+$("n").value||800,1),o:+$("o").value||0,m:Math.min((+$("m").value||0)/100,.9),dl:(+$("dl").value||0)/100,ds:(+$("ds").value||0)/100,inf:(+$("inf").value||0)/100,sb:$("sb").checked},e=+$("el").value||0,H=+$("hz").value,t0=new Date(),rows=[],step=H/14,lg=H>=90;
+  var v={q:+$("q").value||0,n:Math.max(+$("n").value||800,1),o:+$("o").value||0,m:Math.min((+$("m").value||0)/100,.9),dl:(+$("dl").value||0)/100,ds:(+$("ds").value||0)/100,inf:(+$("inf").value||0)/100,sb:$("sb").checked},e=-Math.abs(+$("el").value||0),H=+$("hz").value,t0=new Date(),rows=[],step=H/14,lg=H>=90;
   var fx=function(d){return lg?d.toLocaleDateString("es-BO",{month:"short",year:"2-digit"}):fd(d)};
-  for(var i=0;i<=14;i++){var dt=new Date(t0);dt.setDate(t0.getDate()+Math.round(i*step));var r=pr(dt,v);r.dt=dt;r.dq=100*Math.pow(r.p/.8,e);rows.push(r)}
+  for(var i=0;i<=14;i++){var dt=new Date(t0);dt.setDate(t0.getDate()+Math.round(i*step));var r=pr(dt,v);r.dt=dt;rows.push(r)}
+  var p0=rows[0].p;rows.forEach(function(r){r.dq=100*Math.pow(r.p/p0,e);r.ing=r.dq*r.p/p0});
   var a=pr(t0,v),tm=new Date(t0);tm.setDate(t0.getDate()+1);var b2=pr(tm,v);
   $("dNow").textContent="Hoy, "+fd(t0);$("pNow").textContent="Bs "+fm(a.p);$("sNow").textContent="Costo "+fm(a.c)+" por pan";
   $("dNext").textContent="Mañana, "+fd(tm);$("pNext").textContent="Bs "+fm(b2.p);var df=b2.p-a.p;$("sNext").textContent=df>0.001?"Sube Bs "+fm(df):df<-0.001?"Baja Bs "+fm(-df):"Sin cambio";
   $("h2p").textContent="Proyección: "+({14:"próximos 14 días",30:"próximo mes",90:"próximos 3 meses",365:"próximo año",730:"próximos 2 años"}[H]);
-  var h="<tr><th>Fecha</th><th>Harina (Bs)</th><th>Costo</th><th>Precio</th><th>Demanda (índice)</th></tr>";
-  rows.forEach(function(r){h+="<tr><td>"+fx(r.dt)+"</td><td>"+r.fl.toFixed(0)+"</td><td>"+fm(r.c)+"</td><td><b>"+fm(r.p)+"</b></td><td>"+r.dq.toFixed(0)+"</td></tr>"});$("tb").innerHTML=h;
+  var h="<tr><th>Fecha</th><th>Harina (Bs)</th><th>Costo</th><th>Precio</th><th>Demanda (hoy=100)</th><th>Ingreso (hoy=100)</th></tr>";
+  rows.forEach(function(r){h+="<tr><td>"+fx(r.dt)+"</td><td>"+r.fl.toFixed(0)+"</td><td>"+fm(r.c)+"</td><td><b>"+fm(r.p)+"</b></td><td>"+r.dq.toFixed(0)+"</td><td>"+r.ing.toFixed(0)+"</td></tr>"});$("tb").innerHTML=h;
   var vals=rows.map(function(r){return r.p}).concat(rows.map(function(r){return r.c}),[.8,1]),lo=Math.floor((Math.min.apply(0,vals)-.05)*20)/20,hi=Math.ceil((Math.max.apply(0,vals)+.05)*20)/20,W=640,H2=270,L=46,R=14,T=14,B=30;
   var X=function(i){return L+i*(W-L-R)/14},Y=function(x){return T+(hi-x)*(H2-T-B)/(hi-lo)},gs=hi-lo>.6?.1:.05;
   var s='<svg viewBox="0 0 '+W+' '+H2+'" role="img" aria-label="Proyección de precio y costo por pan">';
@@ -205,11 +313,33 @@ function proj(){
   s+='<polyline fill="none" stroke="var(--g)" stroke-width="3" points="'+rows.map(function(r,i){return X(i)+","+Y(r.p)}).join(" ")+'"/>';
   rows.forEach(function(r,i){s+='<circle cx="'+X(i)+'" cy="'+Y(r.p)+'" r="3.5" fill="var(--g)"/>';if(i%2==0)s+='<text x="'+X(i)+'" y="'+(H2-10)+'" font-size="11" text-anchor="middle" fill="var(--mut)">'+fx(r.dt)+'</text>'});
   $("chart1").innerHTML=s+"</svg>";
+  proj_end(rows,e,fx);
 }
 function setSc(){var s=SC[$("sc").value];$("dl").value=s[0];$("ds").value=s[1];$("inf").value=s[2];proj()}
 ["q","n","o","m","dl","ds","inf","el","hz","sb"].forEach(function(i){$(i).addEventListener("input",proj)});
 $("sc").addEventListener("change",setSc);
 setSc();
+function gv(){return{q:+$('q').value||0,n:Math.max(+$('n').value||800,1),o:+$('o').value||0,m:Math.min((+$('m').value||0)/100,.9),dl:(+$('dl').value||0)/100,ds:(+$('ds').value||0)/100,inf:(+$('inf').value||0)/100,sb:$('sb').checked}}
+function sem(){var v=gv(),a=pr(new Date(),v),pp=+$('pp').value||0,d=pp-a.p,c,t;
+ if(pp<a.c){c='var(--w)';t='Por debajo del costo'}else if(d<=.05){c='var(--g)';t='Precio razonable'}else if(d<=.2){c='var(--w)';t='Algo alto'}else{c='var(--r)';t='Alto'}
+ $('semo').innerHTML=`<b style='font-size:1.6rem;color:${c}'>● ${t}</b><p style='margin:4px 0 0'>Según el modelo, hoy el pan debería costar cerca de Bs ${fm(a.p)} (cuesta producirlo Bs ${fm(a.c)}).</p>`+(pp<a.c?`<p class='mut' style='margin:4px 0 0'>Ese precio está por debajo del costo estimado y es difícil de sostener sin harina subsidiada.</p>`:'');
+ $('wa').href='https://wa.me/?text='+encodeURIComponent('Hoy el pan de batalla debería costar cerca de Bs '+fm(a.p)+' según este simulador: '+location.href);
+ var P=+$('pe').value||0,H=+$('ph').value||0,W=+$('pw').value||60,mm=P*H*30;
+ $('hog').innerHTML=`<p style='margin:0'>Gastas unos <b>Bs ${(mm*pp).toFixed(0)}</b> al mes en pan. Frente a Bs 0,80, pagas <b>Bs ${(mm*(pp-.8)).toFixed(0)}</b> de más. Un kilo de este pan te cuesta <b>Bs ${fm(pp/(W/1000))}</b>.</p>`}
+function bo(){var Q=+$('bq').value||1,P=+$('bp').value||0,N=Math.max(+$('bn').value||800,1),V=+$('bv').value||0,F=+$('bf').value||0,S=+$('bs').value||0,u=P/N+V,t=Q*N,c=u+F/t,mg=S-c,be=S>u?F/(S-u):0;
+ $('bo').innerHTML=`<p>Cada pan te cuesta <b>Bs ${fm(c)}</b>. Vendiendo a Bs ${fm(S)} ${mg>=0?'ganas':'pierdes'} <b>Bs ${fm(Math.abs(mg))}</b> por pan, o sea <b>Bs ${Math.abs(mg*t).toFixed(0)}</b> al día con ${t.toFixed(0)} panes.</p><p>${S>u?`Para no perder tienes que vender al menos <b>${Math.ceil(be)}</b> panes al día${be>t?', más de los que produces':''}.`:'A ese precio no cubres ni la harina y los insumos.'}</p><p class='mut' style='margin:0'>El precio mínimo para no perder es Bs ${fm(c)}.</p>`}
+function fut(){var v=gv(),t0=new Date(),fd=new Date($('fd').value+'T00:00:00'),tg=(+$('tg').value||0)/100,gl=(+$('gl').value||0)/100,R=[],rd=function(c){return Math.round(c/(1-v.m)/.05)*.05};
+ for(var i=0;i<=14;i++){var dt=new Date(t0);dt.setMonth(t0.getMonth()+i);var a=pr(dt,v),on=dt>=fd?1:0,x=a.fl*.08*tg/v.n*on,y=.06*gl*on;R.push({dt:dt,a:rd(a.c),b:rd(a.c+x),c:rd(a.c+x+y)})}
+ var al=[.8,1];R.forEach(function(r){al.push(r.a,r.b,r.c)});
+ var lo=Math.floor((Math.min.apply(0,al)-.05)*20)/20,hi=Math.ceil((Math.max.apply(0,al)+.05)*20)/20,W=640,H=270,L=46,Rr=14,T=14,B=30,X=function(i){return L+i*(W-L-Rr)/14},Y=function(z){return T+(hi-z)*(H-T-B)/(hi-lo)},s=`<svg viewBox='0 0 ${W} ${H}' role='img' aria-label='Proyección con retiro de subvenciones'>`;
+ for(var g=lo;g<=hi+1e-9;g+=(hi-lo>.6?.1:.05)){s+=`<line x1='${L}' x2='${W-Rr}' y1='${Y(g)}' y2='${Y(g)}' stroke='var(--bd)'/><text x='${L-6}' y='${Y(g)+4}' font-size='11' text-anchor='end' fill='var(--mut)'>${fm(g)}</text>`}
+ [['a','var(--mut)','6 4'],['b','var(--w)',''],['c','var(--g)','']].forEach(function(k){s+=`<polyline fill='none' stroke='${k[1]}' stroke-width='3' stroke-dasharray='${k[2]}' points='${R.map(function(r,i){return X(i)+','+Y(r[k[0]])}).join(' ')}'/>`});
+ R.forEach(function(r,i){if(i%2==0)s+=`<text x='${X(i)}' y='${H-10}' font-size='11' text-anchor='middle' fill='var(--mut)'>${r.dt.toLocaleDateString('es-BO',{month:'short',year:'2-digit'})}</text>`});
+ $('ch3').innerHTML=s+'</svg>';var z=R[14];
+ $('fx').innerHTML=`En ${z.dt.toLocaleDateString('es-BO',{month:'long',year:'numeric'})}: sin retiro, Bs ${fm(z.a)}; con retiro de la gasolina, Bs ${fm(z.b)}; con gasolina y gas, Bs ${fm(z.c)}.`}
+function upd(){sem();bo();fut()}
+['q','n','o','m','dl','ds','inf','el','hz','sb','fd','tg','gl','pp','pe','ph','pw','bq','bp','bn','bv','bf','bs'].forEach(function(i){$(i).addEventListener('input',upd)});
+$('sc').addEventListener('change',upd);upd();
 var MUESTRA=40,META=100,FORM_URL="";
 (function(){var p=Math.min(100,MUESTRA/META*100);$("pg").style.width=p+"%";$("pgt").textContent=MUESTRA+" de "+META+" respuestas ("+p.toFixed(0)+"% de la meta)";var fb=$("fb");if(FORM_URL){fb.href=FORM_URL;fb.target="_blank";fb.rel="noopener"}else{fb.style.display="none";$("fh").textContent="Pronto habrá un formulario para responder. Mientras tanto, comparte esta página con quien pueda ayudar."}
 $("sh").addEventListener("click",function(){var u=location.href;if(navigator.share){navigator.share({title:document.title,url:u}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){$("sh").textContent="Enlace copiado"}).catch(function(){})}})})();
